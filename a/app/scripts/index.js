@@ -1,5 +1,5 @@
-var views = require('./views/posts.js');
-var models = require('./models/posts.js');
+var views = require('./views/blogs.js');
+var models = require('./models/blogs.js');
 var $ = require('jquery');
 
 
