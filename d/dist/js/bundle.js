@@ -40,16 +40,14 @@ var AppRouter = Backbone.Router.extend({
   initialize: function(){
     this.collection = new models.BookMarkCollection();
     this.collection.fetch();
-    console.log(this.collection);
   },
-  index: function(id){
-    var bookMark = this.collection.get(id);
-
+  index: function(){
+    console.log(this.collection);
     var bookMarkForm = new views.BookMarkForm({collection: this.collection});
     var bookMarkList = new views.ListBookMark({collection: this.collection});
 
     $('.app').html(bookMarkForm.render().el)
-    .append(bookMarkList.render().el)
+      .append(bookMarkList.render().el);;
   }
 });
 
@@ -101,10 +99,18 @@ var ListBookMark = Backbone.View.extend({
   tagName: 'table',
   className: 'table table-striped',
   template: bookMarkListTemp,
+  initialize: function(){
+    console.log(this.colletion);
+    this.listenTo(this.collection, 'add', this.renderBookMark);
+  },
   render: function(){
-    this.$el.html(this.template());
 
     return this;
+  },
+  renderBookMark: function(model){
+    console.log(arguments);
+    var context = model.toJSON();
+      this.$el.append(this.template(context));
   }
 });
 
@@ -126,7 +132,13 @@ module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":f
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<tr>\n  <th>first</th><td>Testing</td>\n</tr>\n";
+    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+  return "<tr>\n  <td><a href=\""
+    + alias4(((helper = (helper = helpers.url || (depth0 != null ? depth0.url : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"url","hash":{},"data":data}) : helper)))
+    + "\">"
+    + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
+    + "</a></td>\n</tr>\n";
 },"useData":true});
 
 },{"hbsfy/runtime":27}],7:[function(require,module,exports){

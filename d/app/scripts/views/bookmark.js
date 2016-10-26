@@ -40,10 +40,18 @@ var ListBookMark = Backbone.View.extend({
   tagName: 'table',
   className: 'table table-striped',
   template: bookMarkListTemp,
+  initialize: function(){
+    console.log(this.colletion);
+    this.listenTo(this.collection, 'add', this.renderBookMark);
+  },
   render: function(){
-    this.$el.html(this.template());
 
     return this;
+  },
+  renderBookMark: function(model){
+    console.log(arguments);
+    var context = model.toJSON();
+      this.$el.append(this.template(context));
   }
 });
 

@@ -10,16 +10,14 @@ var AppRouter = Backbone.Router.extend({
   initialize: function(){
     this.collection = new models.BookMarkCollection();
     this.collection.fetch();
-    console.log(this.collection);
   },
-  index: function(id){
-    var bookMark = this.collection.get(id);
-
+  index: function(){
+    console.log(this.collection);
     var bookMarkForm = new views.BookMarkForm({collection: this.collection});
     var bookMarkList = new views.ListBookMark({collection: this.collection});
 
     $('.app').html(bookMarkForm.render().el)
-    .append(bookMarkList.render().el)
+      .append(bookMarkList.render().el);;
   }
 });
 
